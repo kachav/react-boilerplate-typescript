@@ -9,13 +9,13 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { FormattedNumber } from 'react-intl';
 
-import { makeSelectCurrentUser } from 'containers/App/selectors';
+import { makeSelectUserName } from 'containers/HomePage/selectors';
 import ListItem from 'components/ListItem';
 import IssueIcon from './IssueIcon';
 import IssueLink from './IssueLink';
 import RepoLink from './RepoLink';
 import Wrapper from './Wrapper';
-import { RootState } from 'containers/App/types';
+import { RootState } from 'containers/HomePage/types';
 
 
 interface OwnProps {
@@ -62,6 +62,6 @@ export class RepoListItem extends React.PureComponent<Props> {
 
 export default connect(
   createStructuredSelector<RootState, StateProps>({
-    currentUser: makeSelectCurrentUser(),
+    currentUser: makeSelectUserName(),
   }),
 )(RepoListItem);

@@ -48,9 +48,9 @@ module.exports = {
     },
     {
       type: 'confirm',
-      name: 'wantSaga',
+      name: 'wantEpic',
       default: true,
-      message: 'Do you want sagas for asynchronous flows? (e.g. fetching data)',
+      message: 'Do you want epics for asynchronous flows? (e.g. fetching data)',
     },
     {
       type: 'confirm',
