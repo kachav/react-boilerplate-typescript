@@ -1,5 +1,7 @@
-import ActionTypes from './constants';
+import {getType} from 'typesafe-actions';
+
 import { ContainerState, ContainerActions } from './types';
+import * as actions from './actions';
 
 // The initial state of the App
 export const initialState: ContainerState = {
@@ -9,34 +11,33 @@ export const initialState: ContainerState = {
   repositories: [],
 };
 
-
 // Take this container's state (as a slice of root state), this container's actions and return new state
 function homeReducer(
   state: ContainerState = initialState,
   action: ContainerActions,
 ): ContainerState {
   switch (action.type) {
-    case ActionTypes.CHANGE_USERNAME:
+    case getType(actions.changeUsername):
       return {
         ...state,
         // Delete prefixed '@' from the github username
         username: action.payload.replace(/@/gi, ''),
       };
-    case ActionTypes.LOAD_REPOS:
+    case getType(actions.loadRepos):
       return {
         ...state,
         loading: true,
         error: false,
         repositories: [],
       };
-    case ActionTypes.LOAD_REPOS_SUCCESS:
+    case getType(actions.reposLoaded):
       return {
         ...state,
         loading: false,
         error: state.error,
         repositories: action.payload.repos,
       };
-    case ActionTypes.LOAD_REPOS_ERROR:
+    case getType(actions.repoLoadingError):
       const { error, loading, ...rest } = state;
       return {
         error: action.payload,

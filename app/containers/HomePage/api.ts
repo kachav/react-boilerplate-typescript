@@ -1,11 +1,9 @@
 import { ajax } from 'rxjs/ajax';
-import { Api } from './types';
+import { Observable } from 'rxjs/internal/Observable';
 
-export const api: Api = {
-  fetchGithub: (id) =>
+import { Repository } from './types';
+
+export default {
+  fetchGithub: (id: string): Observable<Repository[]> =>
     ajax.getJSON(`https://api.github.com/users/${id}/repos?type=all&sort=updated`),
 };
-
-export default api;
-
-export type Api = typeof api;

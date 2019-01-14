@@ -1,7 +1,7 @@
 import { ActionType } from 'typesafe-actions';
 import * as actions from './actions';
+import api from './api';
 import { ApplicationRootState } from 'types';
-import { Observable } from 'rxjs/internal/Observable';
 
 interface Repository {
   readonly id: number;
@@ -22,13 +22,9 @@ interface HomeState {
 /* --- ACTIONS --- */
 type AppActions = ActionType<typeof actions>;
 
-type FetchGithub = (id: string) => Observable<Repository[]>;
-
 /* --- EXPORTS --- */
 
 export type RootState = ApplicationRootState;
 export type ContainerState = HomeState;
 export type ContainerActions = AppActions;
-export interface Api {
-  readonly fetchGithub: (id: string) => Observable<Repository[]>;
-}
+export type Api = typeof api;
