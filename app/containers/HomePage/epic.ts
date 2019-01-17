@@ -23,7 +23,9 @@ export const getRepos: Epic<ContainerActions> = (
     withLatestFrom(userName$),
     switchMap(([action, username]) =>
       api.home.fetchGithub(username).pipe(
-        map(repos => reposLoaded({repos, username})),
+        map(repos => {
+          return reposLoaded({repos, username});
+        }),
         catchError(err => of(repoLoadingError(err))),
       ),
     ),
