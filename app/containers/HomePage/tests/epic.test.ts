@@ -18,7 +18,7 @@ const state = {
   },
 };
 
-let testScheduler;
+let testScheduler: TestScheduler;
 
 beforeEach(() => {
   testScheduler = new TestScheduler((actual, expected) => {
@@ -69,7 +69,7 @@ describe('getRepos Epic', () => {
         CODE: 'test',
       };
 
-      fetchGithub.mockReturnValue(cold('#', null, error));
+      fetchGithub.mockReturnValue(cold('#', undefined, error));
       const loadReposAction = loadRepos();
       const reposFailedAction = repoLoadingError(error);
 
