@@ -1,9 +1,15 @@
-// import { ofType, ActionObservable } from 'redux-observable';
-// import { Observable } from 'rxjs/Observable';
+import { ofType, ActionObservable } from 'redux-observable';
+import { Observable } from 'rxjs/Observable';
+import { getType } from 'typesafe-actions';
 
-// import { RootState } from './types';
+ import { } from './actions';
+ import { ContainerActions } from './types';
 
 // Individual exports for testing
-// export const {{ camelCase name }} = (action$: ActionObservable, state$: Observable<RootState>, dependencies: any) => {
-  // See example in containers/HomePage/saga.js
-// }
+export const {{ camelCase name }}: Epic<ContainerActions> = (
+  action$,
+  state$,
+  {api},
+  ) => {
+  // See example in containers/HomePage/epic.ts
+}

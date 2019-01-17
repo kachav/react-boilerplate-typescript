@@ -1,6 +1,6 @@
 import {TestScheduler} from 'rxjs/testing';
 
-import getReposEpic from '../epic';
+import {getRepos} from '../epic';
 import {loadRepos, reposLoaded, repoLoadingError} from '../actions';
 
 const username = 'testUserName';
@@ -55,13 +55,37 @@ describe('getRepos Epic', () => {
       });
       const dependencies = { api };
 
-      const output$ = getReposEpic(action$, state$, dependencies);
+      const output$ = getRepos(action$, state$, dependencies);
 
       expectObservable(output$).toBe('---a', {
         a: reposLoadedAction,
       });
     });
   });
+
+/*  it('cancel load repos', () => {
+    testScheduler.run(({ cold, hot, expectObservable }) => {
+      fetchGithub.mockReturnValue(cold('--a|', {
+        a: repos,
+      }));
+      const loadReposAction = loadRepos();
+      const reposLoadedAction = reposLoaded({ username, repos });
+
+      const action$: any = hot('--a-a', {
+        a: loadReposAction,
+      });
+      const state$: any = hot('a', {
+        a: state,
+      });
+      const dependencies = { api };
+
+      const output$ = getRepos(action$, state$, dependencies);
+
+      expectObservable(output$).toBe('------a', {
+        a: reposLoadedAction,
+      });
+    });
+  });*/
 
   it('emit error', () => {
     testScheduler.run(({ cold, hot, expectObservable }) => {
@@ -82,7 +106,7 @@ describe('getRepos Epic', () => {
       });
       const dependencies = { api };
 
-      const output$ = getReposEpic(action$, state$, dependencies);
+      const output$ = getRepos(action$, state$, dependencies);
 
       expectObservable(output$).toBe('--a', {
         a: reposFailedAction,
