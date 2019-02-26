@@ -1,0 +1,20 @@
+/**
+ * Test epics
+ */
+import {TestScheduler} from 'rxjs/testing';
+
+import { } from '../epic';
+import { } from '../actions';
+
+
+let testScheduler: TestScheduler;
+
+beforeEach(() => {
+  testScheduler = new TestScheduler((actual, expected) => {
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe('{{ camelCase name }} Epic', () => {
+
+});

@@ -1,3 +1,4 @@
+/*
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -5,7 +6,7 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 import getInjectors from './sagaInjectors';
 import { InjectSagaParams } from 'types';
 
-/**
+/!**
  * Dynamically injects a saga, passes component's props as saga arguments
  *
  * @param {string} key A key of the saga
@@ -15,7 +16,7 @@ import { InjectSagaParams } from 'types';
  *   - constants.DAEMON—starts the saga on component mount and never cancels it or starts again,
  *   - constants.ONCE_TILL_UNMOUNT—behaves like 'RESTART_ON_REMOUNT' but never runs it again.
  *
- */
+ *!/
 
 export default function hocWithSaga<P>({ key, saga, mode }: InjectSagaParams) {
   function wrap(
@@ -54,3 +55,4 @@ export default function hocWithSaga<P>({ key, saga, mode }: InjectSagaParams) {
   }
   return wrap;
 }
+*/

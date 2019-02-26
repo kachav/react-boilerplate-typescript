@@ -12,12 +12,7 @@ import { compose, Dispatch } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
 import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
-import {
-  makeSelectRepos,
-  makeSelectLoading,
-  makeSelectError,
-} from 'containers/App/selectors';
+import injectEpic from 'utils/injectEpic';
 import H2 from 'components/H2';
 import ReposList from 'components/ReposList';
 import AtPrefix from './AtPrefix';
@@ -26,11 +21,16 @@ import Form from './Form';
 import Input from './Input';
 import Section from './Section';
 import messages from './messages';
-import { loadRepos } from '../App/actions';
-import { changeUsername } from './actions';
-import { makeSelectUsername } from './selectors';
+import { changeUsername, loadRepos } from './actions';
+import {
+  makeSelectUsername,
+  makeSelectRepos,
+  makeSelectLoading,
+  makeSelectError,
+} from './selectors';
 import reducer from './reducer';
-import saga from './saga';
+import epic from './epic';
+import api from './api';
 import { RootState } from './types';
 
 // tslint:disable-next-line:no-empty-interface
@@ -51,15 +51,6 @@ interface DispatchProps {
 type Props = StateProps & DispatchProps & OwnProps;
 
 export class HomePage extends React.PureComponent<Props> {
-  /**
-   * when initial state username is not null, submit the form to load repos
-   */
-  public componentDidMount() {
-    if (this.props.username && this.props.username.trim().length > 0) {
-      this.props.onSubmitForm();
-    }
-  }
-
   public render() {
     const { loading, error, repos } = this.props;
     const reposListProps = {
@@ -142,11 +133,12 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer<OwnProps>({ key: 'home', reducer: reducer });
-const withSaga = injectSaga<OwnProps>({ key: 'home', saga: saga });
+export const key = 'home';
+const withReducer = injectReducer<OwnProps>({ key, reducer: reducer });
+const withEpic = injectEpic<OwnProps>({ key, epic, api });
 
 export default compose(
   withReducer,
-  withSaga,
+  withEpic,
   withConnect,
 )(HomePage);

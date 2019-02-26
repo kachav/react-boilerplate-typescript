@@ -4,10 +4,11 @@
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'connected-react-router';
-import createSagaMiddleware from 'redux-saga';
+import { createEpicMiddleware } from 'redux-observable';
 import createReducer from 'reducers';
 
-const sagaMiddleware = createSagaMiddleware();
+const api = {};
+const epicMiddleware = createEpicMiddleware({dependencies: {api}});
 
 declare interface IWindow extends Window {
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any; // redux-dev-tools definitions not needed
@@ -16,9 +17,9 @@ declare const window: IWindow;
 
 export default function configureStore(initialState = {}, history) {
   // Create the store with two middlewares
-  // 1. sagaMiddleware: Makes redux-sagas work
+  // 1. epicMiddleware: Makes redux-observable work
   // 2. routerMiddleware: Syncs the location/URL path to the state
-  const middlewares = [sagaMiddleware, routerMiddleware(history)];
+  const middlewares = [epicMiddleware, routerMiddleware(history)];
 
   const enhancers = [applyMiddleware(...middlewares)];
 
@@ -40,9 +41,10 @@ export default function configureStore(initialState = {}, history) {
   ) as any; // FIX: disable any
 
   // Extensions
-  store.runSaga = sagaMiddleware.run;
+  store.runEpic = epicMiddleware.run;
   store.injectedReducers = {}; // Reducer registry
-  store.injectedSagas = {}; // Saga registry
+  store.injectedEpics = {}; // Epics registry
+  store.api = api; // Api for epics
 
   // Make reducers hot reloadable, see http://mxs.is/googmo
   /* istanbul ignore next */

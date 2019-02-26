@@ -48,14 +48,14 @@ module.exports = {
     },
     {
       type: 'confirm',
-      name: 'wantSaga',
+      name: 'wantEpic',
       default: true,
-      message: 'Do you want sagas for asynchronous flows? (e.g. fetching data)',
+      message: 'Do you want epics for asynchronous flows? (e.g. fetching data)',
     },
     {
       type: 'confirm',
       name: 'wantMessages',
-      default: true,
+      default: false,
       message: 'Do you want i18n messages (i.e. will this component use text)?',
     },
     {
@@ -166,17 +166,17 @@ module.exports = {
     }
 
     // Sagas
-    if (data.wantSaga) {
+    if (data.wantEpic) {
       actions.push({
         type: 'add',
-        path: '../../app/containers/{{properCase name}}/saga.ts',
-        templateFile: './container/saga.js.hbs',
+        path: '../../app/containers/{{properCase name}}/epic.ts',
+        templateFile: './container/epic.js.hbs',
         abortOnFail: true,
       });
       actions.push({
         type: 'add',
-        path: '../../app/containers/{{properCase name}}/tests/saga.test.ts',
-        templateFile: './container/saga.test.js.hbs',
+        path: '../../app/containers/{{properCase name}}/tests/epic.test.ts',
+        templateFile: './container/epic.test.js.hbs',
         abortOnFail: true,
       });
     }
